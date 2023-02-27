@@ -17,3 +17,85 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+
+class Donut(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    flavor = db.Column(db.String(30), unique=True, nullable=False)
+    price = db.Column(db.Float, unique=False, nullable=False)
+    quantity = db.Column(db.Integer, unique=False, nullable=False)
+
+    def __repr__(self):
+        return self.flavor
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "flavor": self.flavor,
+            "price": self.price,
+            "quantity": self.quantity,
+        }
+
+class Bagel(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    flavor = db.Column(db.String(120), unique=False, nullable=False)
+    price = db.Column(db.Float, unique=False, nullable=False)
+    quantity = db.Column(db.Integer, unique=False, nullable=False)
+    
+    def __repr__(self):
+        return self.flavor
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "flavor": self.flavor,
+            "price": self.price,
+            "quantity": self.quantity,
+        }
+
+class Pastry(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    flavor = db.Column(db.String(120), unique=True, nullable=False)
+    price = db.Column(db.Float,unique=False, nullable=False)
+    quantity = db.Column(db.Integer, unique=False, nullable=False)
+    def __repr__(self):
+        return self.flavor
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "flavor": self.flavor,
+            "price": self.price,
+            "quantity": self.quantity,
+        }
+
+class Muffin(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    flavor = db.Column(db.String(120), unique=True, nullable=False)
+    price = db.Column(db.Float, unique=False, nullable=False)
+    quantity = db.Column(db.Integer, unique=False, nullable=False)
+    def __repr__(self):
+        return self.flavor
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "flavor": self.flavor,
+            "price": self.price,
+            "quantity": self.quantity,
+        }
+
+class Coffee(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    size = db.Column(db.String(120), unique=True, nullable=False)
+    price = db.Column(db.Float, unique=False, nullable=False)
+    quantity = db.Column(db.Integer, unique=False, nullable=False)
+    def __repr__(self):
+        return self.size
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "size": self.size,
+            "price": self.price,
+            "quantity": self.quantity,
+        }
