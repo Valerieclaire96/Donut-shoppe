@@ -24,14 +24,16 @@ def add_donut():
     price = request_body.get("price")
     quantity = request_body.get("quantity")
 
-    return jsonify(response_body.serialize), 200
+    return jsonify(response_body), 200
 
 
-@api.route('/donut/<string:flavor>', methods=['GET'])
-def get_donut(flavor):
-    each_donut = Object.query.filter_by(flavor=flavor).first()
+@api.route('/donut/<string:donut_flavor>', methods=['GET'])
+def get_donut(donut_flavor):
+    request_body = request.get_json(force=True)
+    donut_flavor = request_body.get("donut_flavor")
+    donut = Donut.query.filter_by(flavor=donut_flavor).first()
 
-    return jsonify(my_object), 200
+    return jsonify(donut.serialize()), 200
 
 @api.route('/bagel', methods=['POST'])
 def add_bagel():
@@ -45,9 +47,9 @@ def add_bagel():
 
 @api.route('/bagel/<string:flavor>', methods=['GET'])
 def get_bagel(name):
-    each_bagel = Object.query.filter_by(flavor=flavor).first()
+    each_bagel = Bagel.query.filter_by(flavor=flavor).first()
 
-    return jsonify(my_object.serialize()), 200
+    return jsonify(each_bagel), 200
 
 
 @api.route('/pastry', methods=['POST'])
@@ -62,9 +64,9 @@ def add_pastry():
 
 @api.route('/pastry/<int:id>', methods=['GET'])
 def get_pasty(name):
-    each_pastry = Object.query.get(object_id)
+    each_pastry = Pastry.query.filter_by(flavor=flavor).first()
 
-    return jsonify(my_object.serialize()), 200
+    return jsonify(each_pastry), 200
 
 @api.route('/muffin', methods=['POST'])
 def add_muffin():
@@ -78,9 +80,9 @@ def add_muffin():
 
 @api.route('/muffin/<int:id>', methods=['GET'])
 def get_muffin(name):
-    each_muffin = Object.query.get(object_id)
+    each_muffin = Muffin.query.filter_by(flavor=flavor).first()
 
-    return jsonify(my_object.serialize()), 200
+    return jsonify(each_muffin), 200
 
 @api.route('/coffee', methods=['POST'])
 def add_coffee():
@@ -94,6 +96,6 @@ def add_coffee():
 
 @api.route('/coffee/<int:id>', methods=['GET'])
 def get_coffee(name):
-    each_coffee = Object.query.get(object_id)
+    each_coffee = Bagel.query.filter_by(flavor=flavor).first()
 
-    return jsonify(my_object.serialize()), 200
+    return jsonify(each_coffee), 200

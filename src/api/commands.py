@@ -100,6 +100,8 @@ def setup_commands(app):
             )
             db.session.add(new_donut)
             db.session.commit()
+    
+    
     @app.cli.command("insert-bagels") # name of our commandrgument of out command
     def insert_bagels():
         bagel_list = [

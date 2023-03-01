@@ -1,0 +1,13 @@
+.navbar{
+    background: rgb(255, 196, 192);
+    padding: 0 175px;
+    box-shadow: 0 -1px 26px rgba(132, 11, 55, 0.5); 
+}
+.navLogo{
+    border-radius: 50%;
+    height: 55px;
+}
+
+.btn{ 
+    margin: 5px;
+}
