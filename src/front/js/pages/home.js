@@ -27,7 +27,7 @@ export const Home = () => {
 		<div className="preorder">
         <h1>Pre-order Now</h1>
 		<p>Date</p>
-        <button className="btn btn-info"><Link to="/order"></Link>Order Now</button>
+        <button className="btn btn-info"><Link to="/order">Order Now</Link></button>
 		</div>
       </div>
         <h2 className="headingContainer">Customer Reviews</h2>
