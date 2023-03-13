@@ -9,60 +9,56 @@ export default function Order() {
   const [muffins, setMuffins] = useState([]);
   const [coffees, setCoffees] = useState([]);
 
-  const [hasDonut, setHasDonut] = useState(false);
-  const [hasBagel, setHasBagel] = useState(false);
-  const [hasPastry, setHasPastry] = useState(false);
-  const [hasMuffin, setHasMuffin] = useState(false);
-  const [hasCoffee, setHasCoffee] = useState(false);
+  const [DonutFlavor, setDonutFlavor] = useState(false);
+  const [bagelFlavor, setbagelFlavor] = useState(false);
+  const [pastryFlavor, setpastryFlavor] = useState(false);
+  const [muffinFlavor, setmuffinFlavor] = useState(false);
+  const [coffeeFlavor, setcoffeeFlavor] = useState(false);
+
+  const [selectedCategory, setSelectedCategory] = React.useState();
+  const [selectedFlavor, setSelectedFlavor] = React.useState();
+  const [selectedQuantity, setSelectedQuantity] = React.useState();
+
+  const availaibleFlavors = {if(selectedCategory === "Donuts") {donuts.map(flavor => {return donuts.flavor})}
+  
+  // const availaibleQuantity = availaibleFlavors.flavors.find(
+  //   (flavor) => flavor.name === selectedFlavor
+  // );
 
   useEffect(() => {
-    fetch(
-      "https://3001-valerieclai-donutshoppe-sl0tzqe25kw.ws-us89.gitpod.io/api/donuts"
-    )
+    fetch(process.env.BACKEND_URL + "/api/donuts")
       .then((res) => res.json())
       .then((donuts) => {
         setDonuts(donuts);
       })
       .catch((err) => console.log(err));
   }, []);
-
   useEffect(() => {
-    fetch(
-      "https://3001-valerieclai-donutshoppe-sl0tzqe25kw.ws-us89.gitpod.io/api/bagels"
-    )
+    fetch(process.env.BACKEND_URL + "/api/bagels")
       .then((res) => res.json())
       .then((bagel) => {
         setBagels(bagels);
       })
       .catch((err) => console.log(err));
   });
-
   useEffect(() => {
-    fetch(
-      "https://3001-valerieclai-donutshoppe-sl0tzqe25kw.ws-us89.gitpod.io/api/pasteries"
-    )
+    fetch(process.env.BACKEND_URL + "/api/pasteries")
       .then((res) => res.json())
       .then((pastry) => {
         setPastries(pastries);
       })
       .catch((err) => console.log(err));
   });
-
   useEffect(() => {
-    fetch(
-      "https://3001-valerieclai-donutshoppe-sl0tzqe25kw.ws-us89.gitpod.io/api/pasteries"
-    )
+    fetch(process.env.BACKEND_URL + "/api/pasteries")
       .then((res) => res.json())
       .then((muffin) => {
         setMuffins(muffins);
       })
       .catch((err) => console.log(err));
   });
-
   useEffect(() => {
-    fetch(
-      "https://3001-valerieclai-donutshoppe-sl0tzqe25kw.ws-us89.gitpod.io/api/coffees"
-    )
+    fetch(process.env.BACKEND_URL + "/api/coffees")
       .then((res) => res.json())
       .then((coffee) => {
         setCoffees(coffees);
@@ -78,22 +74,56 @@ export default function Order() {
         <input type="date" />
         <label>Pick up Time</label>
         <input></input>
-        <label>Choose:</label>
-        <select className="form-select" aria-label="Default select example">
+        {/* <label>Choose:</label> */}
+        {/* <select className="form-select" aria-label="Default select example">
           <option selected>Open this select menu</option>
           {categories.map((category, index) => (
             <option value={index + 1} key={category}>
               {category}
             </option>
           ))}
-        </select>
-        <select>
+        </select> */}
+        <div>
+          <label>Variety</label>
+          <select
+            placeholder="Choose a variety"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            <option>--Choose a Variety--</option>
+            {categories.map((category, index) => {
+              return (
+                <option value={category} key={category}>
+                  {category}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div>
+          <label>Flavor</label>
+          <select
+            placeholder="Choose a flavor"
+            value={selectedFlavor}
+            onChange={(e) => setSelectedFlavor(e.target.value)}
+          >
+            <option>--Choose a Flavor--</option>
+            {console.log(availaibleFlavors)};
+            {availaibleFlavors?.map((flavor, index) => {
+              return (
+                <option value={flavor} key={index}>
+                  {flavor}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+
+        {/* <select>
           {categories === "Donuts" && setHasDonut(true)
-            ? donuts.length &&
-              hasDonut &&
-              donuts.map((donut, index) => (
+            ? donuts.map((donut, index) => (
                 <option value={index + 1} key={donut}>
-                  {donut}
+                  {donut} : null
                 </option>
               ))
             : null}
@@ -137,10 +167,11 @@ export default function Order() {
                 </option>
               ))
             : null}
-        </select>
+        </select> */}
         <p>Total:</p>
         <button>Check Out</button>
       </form>
     </div>
   );
+}
 }
