@@ -15,12 +15,10 @@ export default function Order() {
   const [muffinFlavor, setmuffinFlavor] = useState(false);
   const [coffeeFlavor, setcoffeeFlavor] = useState(false);
 
-  const [selectedCategory, setSelectedCategory] = React.useState();
-  const [selectedFlavor, setSelectedFlavor] = React.useState();
-  const [selectedQuantity, setSelectedQuantity] = React.useState();
+  const [selectedCategory, setSelectedCategory] = useState();
+  const [selectedFlavor, setSelectedFlavor] = useState();
+  const [selectedQuantity, setSelectedQuantity] = useState();
 
-  const availaibleFlavors = {if(selectedCategory === "Donuts") {donuts.map(flavor => {return donuts.flavor})}
-  
   // const availaibleQuantity = availaibleFlavors.flavors.find(
   //   (flavor) => flavor.name === selectedFlavor
   // );
@@ -36,7 +34,7 @@ export default function Order() {
   useEffect(() => {
     fetch(process.env.BACKEND_URL + "/api/bagels")
       .then((res) => res.json())
-      .then((bagel) => {
+      .then((bagels) => {
         setBagels(bagels);
       })
       .catch((err) => console.log(err));
@@ -44,7 +42,7 @@ export default function Order() {
   useEffect(() => {
     fetch(process.env.BACKEND_URL + "/api/pasteries")
       .then((res) => res.json())
-      .then((pastry) => {
+      .then((pastries) => {
         setPastries(pastries);
       })
       .catch((err) => console.log(err));
@@ -52,7 +50,7 @@ export default function Order() {
   useEffect(() => {
     fetch(process.env.BACKEND_URL + "/api/pasteries")
       .then((res) => res.json())
-      .then((muffin) => {
+      .then((muffins) => {
         setMuffins(muffins);
       })
       .catch((err) => console.log(err));
@@ -60,7 +58,7 @@ export default function Order() {
   useEffect(() => {
     fetch(process.env.BACKEND_URL + "/api/coffees")
       .then((res) => res.json())
-      .then((coffee) => {
+      .then((coffees) => {
         setCoffees(coffees);
       })
       .catch((err) => console.log(err));
@@ -74,104 +72,74 @@ export default function Order() {
         <input type="date" />
         <label>Pick up Time</label>
         <input></input>
-        {/* <label>Choose:</label> */}
-        {/* <select className="form-select" aria-label="Default select example">
+        <label>Choose:</label>
+        <select
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="form-select"
+          aria-label="Default select example"
+        >
           <option selected>Open this select menu</option>
           {categories.map((category, index) => (
-            <option value={index + 1} key={category}>
+            <option value={category} key={index}>
               {category}
             </option>
           ))}
-        </select> */}
-        <div>
-          <label>Variety</label>
-          <select
-            placeholder="Choose a variety"
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-          >
-            <option>--Choose a Variety--</option>
-            {categories.map((category, index) => {
-              return (
-                <option value={category} key={category}>
-                  {category}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-        <div>
-          <label>Flavor</label>
-          <select
-            placeholder="Choose a flavor"
-            value={selectedFlavor}
-            onChange={(e) => setSelectedFlavor(e.target.value)}
-          >
-            <option>--Choose a Flavor--</option>
-            {console.log(availaibleFlavors)};
-            {availaibleFlavors?.map((flavor, index) => {
-              return (
-                <option value={flavor} key={index}>
-                  {flavor}
-                </option>
-              );
-            })}
-          </select>
-        </div>
+        </select>
 
-        {/* <select>
-          {categories === "Donuts" && setHasDonut(true)
-            ? donuts.map((donut, index) => (
-                <option value={index + 1} key={donut}>
-                  {donut} : null
-                </option>
-              ))
-            : null}
+        <label>Flavor</label>
+        <select
+          onChange={(e) => setSelectedFlavor(e.target.value)}
+          className="form-select"
+          aria-label="Default select example"
+        >
+          <option selected>Open this select menu</option>
+          {categories.map((category, index) => (
+            <option value={category} key={index}>
+              {category}
+            </option>
+          ))}
+        </select>
 
-          {categories === "Bagels" && setHasBagel(true)
-            ? bagels.length &&
-              hasBagel &&
-              bagels.map((bagel, index) => (
-                <option value={index + 1} key={bagel}>
-                  {bagel}
-                </option>
-              ))
-            : null}
+        {selectedCategory == categories[0]
+          ? donuts.map((donut, index) => (
+              <option value={index + 1} key={donut}>
+                {donut.flavor}
+              </option>
+            ))
+          : null}
 
-          {categories === "Pastry" && setHasPastry(true)
-            ? pastries.length &&
-              hasPastry &&
-              pastries.map((pastry, index) => (
-                <option value={index + 1} key={pastry}>
-                  {pastry}
-                </option>
-              ))
-            : null}
+        {selectedCategory == categories[1]
+          ? bagels.map((bagel, index) => (
+              <option value={index + 1} key={bagel}>
+                {bagel.flavor}
+              </option>
+            ))
+          : null}
 
-          {categories === "Muffin" && setHasMuffin(true)
-            ? muffins.length &&
-              hasMuffin &&
-              muffins.map((muffin, index) => (
-                <option value={index + 1} key={muffin}>
-                  {muffin}
-                </option>
-              ))
-            : null}
-
-          {categories === "Coffee" && setHasCoffee(true)
-            ? coffees.length &&
-              hasCoffee &&
-              coffees.map((coffee, index) => (
-                <option value={index + 1} key={coffee}>
-                  {coffee}
-                </option>
-              ))
-            : null}
-        </select> */}
+        {selectedCategory == categories[2]
+          ? pastries.map((pastry, index) => (
+              <option value={index + 1} key={pastry}>
+                {pastry.flavor}
+              </option>
+            ))
+          : null}
+        {selectedCategory == categories[3]
+          ? muffins.map((muffin, index) => (
+              <option value={index + 1} key={muffin}>
+                {muffin.flavor}
+              </option>
+            ))
+          : null}
+        {selectedCategory == categories[4]
+          ? coffees.map((coffee, index) => (
+              <option value={index + 1} key={coffee}>
+                {coffee.flavor}
+              </option>
+            ))
+          : null}
         <p>Total:</p>
         <button>Check Out</button>
       </form>
     </div>
   );
-}
 }
