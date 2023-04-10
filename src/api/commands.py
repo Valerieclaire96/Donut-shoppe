@@ -37,57 +37,57 @@ def setup_commands(app):
     def insert_donuts():
         donut_list = [
             {
-                "flavor": "glazed",
+                "flavor": "Glazed",
                 "price": 1.5,
                 "quantity": 300,
             },
              {
-                "flavor": "choc glazed",
+                "flavor": "Chocolate Glazed",
                 "price": 1.5,
                 "quantity": 100,
             },
              {
-                "flavor": "blueberry",
+                "flavor": "Blueberry",
                 "price": 1.5,
                 "quantity": 75,
             },
              {
-                "flavor": "choc frosted",
+                "flavor": "Chocolate Frosted",
                 "price": 2,
                 "quantity": 75,
             },
              {
-                "flavor": "van frosted",
+                "flavor": "Vanilla Frosted",
                 "price": 2,
                 "quantity": 75,
             },
              {
-                "flavor": "straw frosted",
+                "flavor": "Strawberry Frosted",
                 "price": 2,
                 "quantity": 75,
             },
              {
-                "flavor": "cream filled",
+                "flavor": "Cream Filled",
                 "price": 2.5,
                 "quantity": 50,
             },
              {
-                "flavor": "boston cream",
+                "flavor": "Boston Cream",
                 "price": 2.5,
                 "quantity": 50,
             },
              {
-                "flavor": "jelly",
+                "flavor": "Jelly",
                 "price": 2.5,
                 "quantity": 50,
             },
              {
-                "flavor": "lemon filled",
+                "flavor": "Lemon Cream",
                 "price": 2.5,
                 "quantity": 25,
             },
              {
-                "flavor": "seasonal",
+                "flavor": "Seasonal",
                 "price": 2,
                 "quantity": 200,
             },
@@ -101,27 +101,26 @@ def setup_commands(app):
             db.session.add(new_donut)
             db.session.commit()
     
-    
     @app.cli.command("insert-bagels") # name of our commandrgument of out command
     def insert_bagels():
         bagel_list = [
             {
-                "flavor": "plain",
+                "flavor": "Plain",
                 "price": 3,
                 "quantity": 30,
             },
             {
-                "flavor": "blueberry",
+                "flavor": "Blueberry",
                 "price": 3,
                 "quantity": 30,
             },
             {
-                "flavor": "everything",
+                "flavor": "Everything",
                 "price": 3,
                 "quantity": 30,
             },
             {
-                "flavor": "cinnamon raisin",
+                "flavor": "Cinnamon Raisin",
                 "price": 2,
                 "quantity": 25,
             },
@@ -140,37 +139,37 @@ def setup_commands(app):
     def insert_pastry():
         pastry_list = [
             {
-                "flavor": "croissant",
+                "flavor": "Croissant",
                 "price": 2,
                 "quantity": 50,
             },
             {
-                "flavor": "choc croissant",
+                "flavor": "Chocolate Croissant",
                 "price": 3,
                 "quantity": 50,
             },
             {
-                "flavor": "almond croissant",
+                "flavor": "Almond Croissant",
                 "price": 3,
                 "quantity": 30,
             },
             {
-                "flavor": "bear claw",
+                "flavor": "Bear Claw",
                 "price": 3,
                 "quantity": 30,
             },
             {
-                "flavor": "maple log",
+                "flavor": "Maple Log",
                 "price": 3,
                 "quantity": 20,
             },
             {
-                "flavor": "danish",
+                "flavor": "Danish",
                 "price": 3,
                 "quantity": 20,
             },
             {
-                "flavor": "turnover",
+                "flavor": "Turnover",
                 "price": 3,
                 "quantity": 20,
             },
@@ -188,27 +187,27 @@ def setup_commands(app):
     def insert_muffins():
         muffin_list = [
             {
-                "flavor": "blueberry",
+                "flavor": "Blueberry",
                 "price": 3,
                 "quantity": 15,
             },
             {
-                "flavor": "poppy seed",
+                "flavor": "Poppy Seed",
                 "price": 3,
                 "quantity": 5,
             },
             {
-                "flavor": "bran",
+                "flavor": "Bran",
                 "price": 3,
                 "quantity": 5,
             },
             {
-                "flavor": "choc chip",
+                "flavor": "Chocolate Chip",
                 "price": 3,
                 "quantity": 15,
             },
             {
-                "flavor": "mixed berry",
+                "flavor": "Mixed Berry",
                 "price": 3,
                 "quantity": 10,
             },
@@ -226,24 +225,24 @@ def setup_commands(app):
     def insert_coffee():
         coffee_list = [
             {
-                "size": "small",
+                "flavor": "Small (3-5 Servings)",
                 "price": 10,
                 "quantity": 15,
             },
             {
-                "size": "medium",
+                "flavor": "Medium (5-10 Servings)",
                 "price": 15,
                 "quantity": 15,
             },
             {
-                "size": "large",
+                "flavor": "Large (10-15 Servings)",
                 "price": 20,
                 "quantity": 10,
             },
         ]
         for coffee in coffee_list:
             new_coffee = Coffee(
-                size = coffee['size'],
+                flavor = coffee['flavor'],
                 price = coffee['price'],
                 quantity = coffee['quantity'],
             )

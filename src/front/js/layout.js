@@ -7,7 +7,7 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import Order from "./pages/Order";
 import injectContext from "./store/appContext";
-
+import Hgdsa from "./component/hgdsa";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
@@ -28,6 +28,7 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
+                        <Route element={<Hgdsa/>} path="/whatever"/>
                     </Routes>
                     <Footer />
                 </ScrollToTop>

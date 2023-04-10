@@ -108,7 +108,7 @@ def get_muffin(name):
 @api.route('/coffee', methods=['POST'])
 def add_coffee():
     request_body = request.get_json(force=True)
-    size = request_body.get("size")
+    flavor = request_body.get("flavor")
     price = request_body.get("price")
     quantity = request_body.get("quantity")
 
@@ -120,8 +120,79 @@ def get_all_coffee():
     all_coffees = list(map(lambda coffee: coffee.serialize(), coffees))
     return jsonify(all_coffees), 200
 
-@api.route('/coffee/<string:size>', methods=['GET'])
+@api.route('/coffee/<string:flavor>', methods=['GET'])
 def get_coffee(name):
-    each_coffee = Coffee.query.filter_by(size=size).first()
+    each_coffee = Coffee.query.filter_by(flavor=flavor).first()
 
     return jsonify(each_coffee), 200
+
+@api.route('/stock/<string:treat>/<string:flavor>/<int:amount>', methods=["GET"])
+def get_stock(treat,flavor,amount):
+    if treat == "donut":
+        donut = Donut.query.filter_by(flavor=donut_flavor).first()
+        if donut.quantity >= amount:
+            return jsonify("Added Successfully"), 200
+        return jsonify("Not enough stock"), 400 
+    elif treat == "bagel":
+        bagel = Bagel.query.filter_by(flavor=bagel_flavor).first()
+        if bagel.quantity >= amount:
+            return jsonify("Added Successfully"), 200
+        return jsonify("Not enough stock"), 400 
+    elif treat == "pasteries":
+        pasteries = Pasteries.query.filter_by(flavor=pasteries_flavor).first()
+        if pasteries.quantity >= amount:
+            return jsonify("Added Successfully"), 200
+        return jsonify("Not enough stock"), 400 
+    elif treat == "muffin":
+        muffin = muffin.query.filter_by(flavor=muffin_flavor).first()
+        if muffin.quantity >= amount:
+            return jsonify("Added Successfully"), 200
+        return jsonify("Not enough stock"), 400 
+    elif treat == "coffee":
+        coffee = Coffee.query.filter_by(flavor=coffee_flavor).first()
+        if coffee.quantity >= amount:
+            return jsonify("Added Successfully"), 200
+        return jsonify("Not enough stock"), 400 
+    
+@api.route('/stock/order', methods=['PUT'])
+def place_order():
+    request_body = request.get_json()
+    order_items = request_body['order_items']
+    for item in order_items: 
+        amount= item["amount"]
+        if item["treat"] == "donut":
+            donut = Donut.query.filter_by(flavor=item["flavor"]).first()
+            if donut.quantity >= item["amount"]:
+                donut.quantity -= amount 
+                db.session.commit()
+                return jsonify("Added Successfully"), 200
+            return jsonify("Not enough stock"), 400 
+        elif item["treat"] == "bagel":
+            bagel = Bagel.query.filter_by(flavor=item["flavor"]).first()
+            if bagel.quantity >= item["amount"]:
+                bagel.quantity -= amount
+                db.session.commit()               
+                return jsonify("Added Successfully"), 200
+            return jsonify("Not enough stock"), 400 
+        elif item["treat"] == "pasteries":
+            pasteries = Pasteries.query.filter_by(flavor=item["flavor"]).first()
+            if pasteries.quantity >= item["amount"]:
+                pastries.quantity -= amount 
+                db.session.commit()
+                return jsonify("Added Successfully"), 200
+            return jsonify("Not enough stock"), 400 
+        elif item["treat"] == "muffin":
+            muffin = muffin.query.filter_by(flavor=item["flavor"]).first()
+            if muffin.quantity >= item["amount"]:
+                muffin.quantity -= amount 
+                db.session.commit()
+                return jsonify("Added Successfully"), 200
+            return jsonify("Not enough stock"), 400 
+        elif item["treat"] == "coffee":
+            coffee = Coffee.query.filter_by(flavor= item["flavor"]).first()
+            if coffee.quantity >= item["amount"]:
+                coffee.quantity -= amount  
+                db.session.commit()   
+                return jsonify("Added Successfully"), 200
+            return jsonify("Not enough stock"), 400 
+        

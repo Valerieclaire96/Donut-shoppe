@@ -1,0 +1,33 @@
+.orderContainer{
+    background-image: url("https://i.etsystatic.com/29590405/r/il/1ec131/3103058036/il_794xN.3103058036_ebxt.jpg");
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+form{
+    width: 750px;
+    background: rgb(252, 72, 107);
+    display: inline-block;
+    padding: 25px 5px 5px 5px;
+    margin: 20px;
+    box-shadow: 0 -1px 26px rgba(132, 11, 55, 0.5); 
+    height: 475px;
+    border-radius: 12px;
+}
+h2{
+    text-align: center;
+    text-decoration: underline;
+    margin-bottom: 35px;
+}
+
+.pickup{
+    margin: 1px 2px;
+}
+
+.selections-container{
+    background: rgb(255, 196, 192);
+    width: 100%;
+    border-radius: 12px;
+    padding: 20px;
+}
