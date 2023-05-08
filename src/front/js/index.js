@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 import "../styles/index.css";
 import "../styles/nav.css";
 import "../styles/order.css"
+import "../styles/checkout.css"
 
 //import your own components
 import Layout from "./layout";

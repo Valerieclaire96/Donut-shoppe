@@ -2,8 +2,9 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Donut, Bagel, Pastry, Muffin, Coffee
+from api.models import db, User, Donut, Bagel, Pastry, Muffin, Coffee, Date
 from api.utils import generate_sitemap, APIException
+from urllib.parse import unquote
 
 api = Blueprint('api', __name__)
 
@@ -128,71 +129,86 @@ def get_coffee(name):
 
 @api.route('/stock/<string:treat>/<string:flavor>/<int:amount>', methods=["GET"])
 def get_stock(treat,flavor,amount):
-    if treat == "donut":
-        donut = Donut.query.filter_by(flavor=donut_flavor).first()
-        if donut.quantity >= amount:
+    store_date = Date.query.all()
+    print ("STORE DATE",store_date)
+    if treat == "donuts":
+        donut = Donut.query.filter_by(flavor=unquote(donut_flavor).title()).first()
+        if donut.quantity >= int(amount):
             return jsonify("Added Successfully"), 200
         return jsonify("Not enough stock"), 400 
-    elif treat == "bagel":
-        bagel = Bagel.query.filter_by(flavor=bagel_flavor).first()
+    elif treat == "bagels":
+        bagel = Bagel.query.filter_by(flavor=unquote(bagel_flavor.title())).first()
         if bagel.quantity >= amount:
             return jsonify("Added Successfully"), 200
         return jsonify("Not enough stock"), 400 
     elif treat == "pasteries":
-        pasteries = Pasteries.query.filter_by(flavor=pasteries_flavor).first()
+        pasteries = Pasteries.query.filter_by(flavor=unquote(pasteries_flavor.title())).first()
         if pasteries.quantity >= amount:
             return jsonify("Added Successfully"), 200
         return jsonify("Not enough stock"), 400 
     elif treat == "muffin":
-        muffin = muffin.query.filter_by(flavor=muffin_flavor).first()
+        muffin = muffin.query.filter_by(flavor=unquote(muffin_flavor).title()).first()
         if muffin.quantity >= amount:
             return jsonify("Added Successfully"), 200
         return jsonify("Not enough stock"), 400 
     elif treat == "coffee":
-        coffee = Coffee.query.filter_by(flavor=coffee_flavor).first()
+        coffee = Coffee.query.filter_by(flavor=unquote(coffee_flavor).title()).first()
         if coffee.quantity >= amount:
             return jsonify("Added Successfully"), 200
         return jsonify("Not enough stock"), 400 
+    else:
+        return jsonify("stock not found"), 400
+    
     
 @api.route('/stock/order', methods=['PUT'])
 def place_order():
     request_body = request.get_json()
-    order_items = request_body['order_items']
+    order_items = request_body['cart']
     for item in order_items: 
-        amount= item["amount"]
-        if item["treat"] == "donut":
-            donut = Donut.query.filter_by(flavor=item["flavor"]).first()
-            if donut.quantity >= item["amount"]:
+        total= item["quantity"]
+        amount= int(total)
+        print(item, "ITEMMMM")
+        if item["treat"] == "Donuts":
+            donut = Donut.query.filter_by(flavor=unquote(item["flavor"]).title()).first()
+            print(donut, "donut")
+            if donut.quantity >= amount:
                 donut.quantity -= amount 
                 db.session.commit()
                 return jsonify("Added Successfully"), 200
             return jsonify("Not enough stock"), 400 
-        elif item["treat"] == "bagel":
-            bagel = Bagel.query.filter_by(flavor=item["flavor"]).first()
-            if bagel.quantity >= item["amount"]:
+        elif item["treat"] == "Bagels":
+            bagel = Bagel.query.filter_by(flavor=unquote(item["flavor"]).title()).first()
+            if bagel.quantity >= amount:
                 bagel.quantity -= amount
                 db.session.commit()               
                 return jsonify("Added Successfully"), 200
             return jsonify("Not enough stock"), 400 
         elif item["treat"] == "pasteries":
-            pasteries = Pasteries.query.filter_by(flavor=item["flavor"]).first()
-            if pasteries.quantity >= item["amount"]:
+            pasteries = Pasteries.query.filter_by(flavor=unquote(item["flavor"]).title()).first()
+            if pasteries.quantity >= amount:
                 pastries.quantity -= amount 
                 db.session.commit()
                 return jsonify("Added Successfully"), 200
             return jsonify("Not enough stock"), 400 
         elif item["treat"] == "muffin":
-            muffin = muffin.query.filter_by(flavor=item["flavor"]).first()
-            if muffin.quantity >= item["amount"]:
+            muffin = muffin.query.filter_by(flavor=unquote(item["flavor"]).title()).first()
+            if muffin.quantity >= amount:
                 muffin.quantity -= amount 
                 db.session.commit()
                 return jsonify("Added Successfully"), 200
             return jsonify("Not enough stock"), 400 
         elif item["treat"] == "coffee":
-            coffee = Coffee.query.filter_by(flavor= item["flavor"]).first()
-            if coffee.quantity >= item["amount"]:
+            coffee = Coffee.query.filter_by(flavor=unquote(item["flavor"]).title()).first()
+            if coffee.quantity >= amount:
                 coffee.quantity -= amount  
                 db.session.commit()   
                 return jsonify("Added Successfully"), 200
             return jsonify("Not enough stock"), 400 
         
+@api.route("/stock/reset", methods=["PUT"])
+def reset_stock():
+    donut_glazed = Donut.query.filter_by(flavor=unquote("Glazed").title()).first()
+    donut_glazed.quantity = 300
+    
+    db.session.commit()
+    

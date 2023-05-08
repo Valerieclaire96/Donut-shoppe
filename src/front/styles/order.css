@@ -5,7 +5,8 @@
     display: flex;
     justify-content: center;
 }
-form{
+form,
+.innerCheckoutContainer {
     width: 750px;
     background: rgb(252, 72, 107);
     display: inline-block;
@@ -15,7 +16,8 @@ form{
     height: 475px;
     border-radius: 12px;
 }
-h2{
+h2,
+ul{
     text-align: center;
     text-decoration: underline;
     margin-bottom: 35px;
@@ -23,8 +25,12 @@ h2{
 
 .pickup{
     margin: 1px 2px;
+    background: none;
 }
+.date{
+    border: 1px solid black;
 
+}
 .selections-container{
     background: rgb(255, 196, 192);
     width: 100%;

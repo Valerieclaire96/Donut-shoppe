@@ -49,9 +49,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 			addToOrder: (element) => {
+				fetch(process.env.BACKEND_URL+"/stock/" + element.treat + "/" + element.flavor + "/" + element.quantity)
+				.then(response => response.json())
+				.then(result => {console.log(result)})
+				.catch(err => {console.log(err)})
 				let cart = getStore().cart
 				setStore({cart:[...cart, element]})
 				console.log("ELEMENT", element);
+				
 			}
 		}
 	};
